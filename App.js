@@ -6,9 +6,14 @@ import Task from './components/Task';
 export default function App() {
   const [task, setTask] = useState('');
   const [taskItems, setTaskItems] = useState([]);
-  const handleTask = () => {
+  const handleAddTask = () => {
     setTaskItems([...taskItems, task]);
     setTask('');
+  }
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
   }
   return (
     <View style={styles.container}>
@@ -18,8 +23,8 @@ export default function App() {
           {
             taskItems.map((item, index) => {
               return (
-                <TouchableOpacity key={index}>
-                  <task text={item} />
+                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                  <Task text={item} />
                 </TouchableOpacity>
               )
             })
@@ -75,8 +80,6 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: '#fff',
     borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#c0c0c0',
